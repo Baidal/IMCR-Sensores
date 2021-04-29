@@ -1,7 +1,9 @@
 import cv2 as cv
 import num as np
+import requests
 import sys
 import os.path
+import socket
 
 
 class bcolors:
@@ -20,6 +22,10 @@ class exit_codes:
     EX_OK = 0
     EX_USAGE = 64
     EX_NOINPUT = 66
+
+
+class server_addresses:
+    DEFAULT = "http://wewewew.com/apirest"
 
 
 def checkArguments(argumentos):
@@ -62,6 +68,17 @@ def returnGaussianBlurred(image):
         image, (distortion, distortion), cv.BORDER_DEFAULT)
 
 
+def sendBinaryData(path_data, camNumber):
+
+    # Still needs some polishing...
+    data = {
+        'media': open(path_data, 'rb'),
+        'camname': socket.gethostname()
+    }
+
+    requests.post(server_addresses.DEFAULT, files=data)
+
+
 def main():
     checkArguments(sys.argv)
     checkFile(sys.argv[1])
@@ -71,6 +88,8 @@ def main():
     imgBlurred = returnGaussianBlurred(image)
 
     cv.imwrite(sys.argv[1], imgBlurred)
+
+    # sendBinaryData(sys.argv[1])
 
     sys.exit(EX_OK)
 
