@@ -1,31 +1,78 @@
 import cv2 as cv
-import numpy as np
+import num as np
 import sys
+import os.path
 
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
-def parseArguments(argumentos):
-    global img 
-    global distorsion
+
+class exit_codes:
+    EX_OK = 0
+    EX_USAGE = 64
+    EX_NOINPUT = 66
+
+
+def checkArguments(argumentos):
     if len(argumentos) != 3:
-        print("Falta introducir el archivo adjunto y/o grado de distorsion. \n Formato: preprocesamiento.py nombreArchivo GradoDistorsion(int)")
-        sys.exit(-1)
-    else:
-        img = cv.imread(argumentos[1])
-        if img is None:
-            print("La imagen introducida no existe en " + argumentos[0])
-            sys.exit(-1)
-        
-        distorsion = int(argumentos[2]) if argumentos[2].isnumeric() else None
-        if distorsion is None or distorsion < 1:
-            print("El grado de distorsion tiene que ser un entero superior a 0")
-            sys.exit(-1)
-        return
+        print(bcolors.FAIL,
+              "Falta introducir el archivo adjunto y/o grado de distorsion. \n",
+              bcolors.OKBLUE,
+              "python3 preprocesamiento.py [archivo: string] [grado_distorsion: int]",
+              bcolors.ENDC)
+        sys.exit(exit_codes.EX_USAGE)
 
 
-parseArguments(sys.argv)
-blur = cv.GaussianBlur(img,(distorsion,distorsion),0)
-nuevoNombre = sys.argv[1].split('.')
-nombreArchivoBlur = nuevoNombre[0] + "Blur." + nuevoNombre[1]
-cv.imwrite(nombreArchivoBlur,blur)
-sys.exit(1)
+def checkFile(file):
+
+    if not os.path.isfile(file):
+        print(bcolors.FAIL,
+              "La imagen introducida no existe:\n",
+              bcolors.OKBLUE,
+              file,
+              bcolors.ENDC)
+
+        sys.exit(exit_codes.EX_NOINPUT)
+
+
+def checkDistortion(distorsion):
+
+    distorsion = int(distorsion) if distorsion.isnumeric() else None
+
+    if distorsion is None or distorsion < 1 or (distorsion % 2) == 0:
+        print(bcolors.FAIL,
+              "El grado de distorsion tiene que ser:",
+              bcolors.OKBLUE,
+              "un entero, impar y superior a 0",
+              bcolors.ENDC)
+        sys.exit(exit_codes.EX_USAGE)
+
+
+def returnGaussianBlurred(image):
+    return cv.GaussianBlur(
+        image, (distortion, distortion), cv.BORDER_DEFAULT)
+
+
+def main():
+    checkArguments(sys.argv)
+    checkFile(sys.argv[1])
+    checkDistortion(sys.argv[2])
+
+    image = cv.imread(sys.argv[1])
+    imgBlurred = returnGaussianBlurred(image)
+
+    cv.imwrite(sys.argv[1], imgBlurred)
+
+    sys.exit(EX_OK)
+
+
+main()
