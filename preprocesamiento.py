@@ -70,13 +70,17 @@ def returnGaussianBlurred(image):
 
 def sendBinaryData(path_data, camNumber):
 
-    # Still needs some polishing...
-    data = {
+    timeoutTime = 30
+    
+    file = {
         'media': open(path_data, 'rb'),
+    }
+    
+    values = {        
         'camname': socket.gethostname()
     }
 
-    requests.post(server_addresses.DEFAULT, files=data)
+    response = requests.post(server_addresses.DEFAULT, files=file, data=values, timeout=timeoutTime)
 
 
 def main():
