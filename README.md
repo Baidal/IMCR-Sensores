@@ -12,7 +12,6 @@ The main script is `preproc.py`.
 It takes 2 arguments:
 - The path to the image to process (string).
 - The degree of distortion (integer).
-- An option to overwrite the input with the output image (boolean).
 
 Examples:
 - `python3 preproc.py [image_path] [distortion_degree]`
