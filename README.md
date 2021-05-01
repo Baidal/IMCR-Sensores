@@ -1,7 +1,7 @@
 # IMCR-Sensores
 This repository contains the code relative to the sensoring part of the IMCR project.
 
-The main goal of the project is to create a system that auto detects available parking lots, and notifies the nearby drivers about it.
+The main goal of the project is to create a system that auto detects available parking lots live on the streets, and notifies the nearby drivers about it.
 
 This script `preproc.py` takes a picture of the available camera, pre-processes it, and sends it to the data-analisys system.
 
