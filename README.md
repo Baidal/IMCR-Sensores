@@ -20,6 +20,11 @@ Examples:
 ## Output
 The expected output is an image processed with all the filters needed.
 
+## Other files
+The other bash scripts are for automatic deployment.
+- `screen_script.sh`: Infinite loop that takes a picture and processes it.
+- `start.sh`: Sends that installs the required packages and starts the loop.
+
 ## Test files
 Theres an image inside the `dataset` folder.
 You can use that image to test if the processing you need is adequate.
