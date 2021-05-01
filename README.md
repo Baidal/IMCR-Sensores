@@ -1,24 +1,30 @@
 # IMCR-Sensores
-Parte de tratamiento de imágenes  por parte del grupo de sensores.
+This repository contains the code relative to the sensoring part of the IMCR project.
 
-## Funcionamiento
+The main goal of the project is to create a system that auto detects available parking lots, and notifies the nearby drivers about it.
 
-El código principal se encuentra en el archivo preprocesamiento.py, el cual debe ser llamado de la siguiente forma:
-```
-python preprocesamiento.py nombrearchivo distorsion
-```
-Donde "nombrearchivo" es el nombre de la imagen a procesar, y "distorsión" un entero que representa el grado de distorsión de la imagen.
-En caso de no pasar los argumentos, la imagen no sea encontrada, o se pase una distorsión que no sea un entero, o este sea menor que 0, el programa se abortará con estado -1. En caso contrario se creará una nueva imagen, que será guardada con el nombre original de la imagen más el sufijo "Blur". 
+This script `preproc.py` takes a picture of the available camera, pre-processes it, and sends it to the data-analisys system.
 
-Así, si la imagen original es
-```
-Kante.png
-```
-La imagen resultante será:
-```
-KanteBlur.png
-```
+## How to run
 
-## Instalación
-Para ejecutar el script es necesario que esté instalada la librería python3-opencv en el sistema, además de python.
+The main script is `preproc.py`.
+
+It takes 2 arguments:
+- The path to the image to process (string).
+- The degree of distortion (integer).
+- An option to overwrite the input with the output image (boolean).
+
+Examples:
+- `python3 preproc.py [image_path] [distortion_degree]`
+- `python3 preproc.py dataset/parking.png 5`
+
+## Output
+The expected output is an image processed with all the filters needed.
+
+## Test files
+Theres an image inside the `dataset` folder.
+You can use that image to test if the processing you need is adequate.
+
+## Installation
+To run the script, the library python3-opencv must be installed on the system, in addition to the python3 binary.
 
