@@ -67,6 +67,7 @@ def checkDistortion(distortion):
 
 
 def gaussianBlurProcess(image, distortion):
+    distortion = int(distortion)
     return cv.GaussianBlur(
         image, (distortion, distortion), cv.BORDER_DEFAULT)
 
