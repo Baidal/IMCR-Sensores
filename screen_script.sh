@@ -9,7 +9,8 @@
 while :; do
 
     fswebcam --no-banner -r 1920x720 --png -0 $2;
-    python3 ./preproc.py $2 $3
+    python3 ./preproc.py $2 $3;
+    echo "IMAGE PROCESSED, WAITIG $1 SECONDS UNTIL NEXT ITERATION";
     sleep $1;
 
 done;
