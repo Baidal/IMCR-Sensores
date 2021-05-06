@@ -1,4 +1,5 @@
-import cv2 as cv
+import numpy
+import cv2
 import requests
 import sys
 import os.path
@@ -67,8 +68,8 @@ def checkDistortion(distortion):
 
 
 def gaussianBlurProcess(image, distortion):
-    return cv.GaussianBlur(
-        image, (distortion, distortion), cv.BORDER_DEFAULT)
+    return cv2.GaussianBlur(
+        image, (distortion, distortion), cv2.BORDER_DEFAULT)
 
 
 def sendBinaryData(path_data, camNumber):
@@ -108,16 +109,16 @@ def main():
     distortion = int(sys.argv[2])
 
     # Load the image.
-    binaryImage = cv.imread(imagePath)
+    binaryImage = cv2.imread(imagePath)
 
     # Process the image.
     processedBinaryImage = gaussianBlurProcess(binaryImage, distortion)
 
     # Save the processed image on the same path, overwritting the original image.
-    cv.imwrite(imagePath, processedBinaryImage)
+    cv2.imwrite(imagePath, processedBinaryImage)
 
-    # Sends the processed image to the data-analisys system.
-    sendBinaryData(imagePath)
+    # Sends the processed image to the data-analisys system. ( URL pending ).
+    # sendBinaryData(imagePath)
 
     # Good bye, have a great day!
     sys.exit(exit_codes.EX_OK)
