@@ -67,7 +67,6 @@ def checkDistortion(distortion):
 
 
 def gaussianBlurProcess(image, distortion):
-    distortion = int(distortion)
     return cv.GaussianBlur(
         image, (distortion, distortion), cv.BORDER_DEFAULT)
 
@@ -106,7 +105,7 @@ def main():
 
     # Save the arguments on variables for easier handling.
     imagePath = sys.argv[1]
-    distortion = sys.argv[2]
+    distortion = int(sys.argv[2])
 
     # Load the image.
     binaryImage = cv.imread(imagePath)
